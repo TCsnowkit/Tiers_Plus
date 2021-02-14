@@ -24,14 +24,14 @@ namespace TiersPlus
         ItemInfo PlasmaArmor;
         ItemInfo PlasmaHelmet;
         ItemInfo PlasmaShield;
-        public const string MOD_VERSION = "1.0";
+        public const string MOD_VERSION = "1.0.5";
         public const string CONFIG_VERSION = "1.0";
 
         protected override void Initialize()
         {
             Logger.Log("Tiers+ v" + Info.Mod.Version);
             Logger.Log("Plasmathrower v" + Info.Mod.Version);
-            PlasmaCannon = new ItemInfo(ItemType.WEAPON, "Plasmathrower", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaCannonItem"), Stats: new EquipStats(20, 0, 20, 15, 0, 0), HeldTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaCannonHeld"));
+            PlasmaCannon = new ItemInfo(ItemType.WEAPON, "Plasmathrower", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaCannonItem"), Stats: new EquipStats(5, 0, 10, 10, 0, 0), HeldTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaCannonHeld"));
             PlasmaCannon.SetWeaponInfo(new float[] { 0.25f, 0, 0.5f, 0.5f, 0, 0 }, GadgetCoreAPI.GetAttackSound(497));
             PlasmaCannon.Register("PlasmaCannon");
             GameObject PlasmaCannonProj = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetWeaponProjectileResource(471));
@@ -59,7 +59,7 @@ namespace TiersPlus
 
             PlasmaCannon.OnAttack += TripleShot;
             //plasmacannon
-            NebulaCannon = new ItemInfo(ItemType.WEAPON, "Nebular Grenadier", "", GadgetCoreAPI.LoadTexture2D("items/NebulaCannonItem"), Stats: new EquipStats(0, 0, 5, 10, 0, 0), HeldTex: GadgetCoreAPI.LoadTexture2D("items/NebulaCannonHeld"));
+            NebulaCannon = new ItemInfo(ItemType.WEAPON, "Nebular Grenadier", "", GadgetCoreAPI.LoadTexture2D("items/NebulaCannonItem"), Stats: new EquipStats(0, 0, 15, 10, 0, 0), HeldTex: GadgetCoreAPI.LoadTexture2D("items/NebulaCannonHeld"));
             NebulaCannon.SetWeaponInfo(new float[] { 0, 0, 0.5f, 2, 0, 0 }, GadgetCoreAPI.GetAttackSound(473));
             NebulaCannon.Register("NebulaCannon");
             NebulaCannon.OnAttack += CustomPlasma;
@@ -199,7 +199,7 @@ namespace TiersPlus
 
             GameObject MykBug = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetEntityResource("spider"));
             MykBug.name = "Mykdunebug";
-            UnityEngine.Object.Destroy(MykBug.GetComponent<SpiderScript>());
+            //UnityEngine.Object.Destroy(MykBug.GetComponent<SpiderScript>());
             MykBug.AddComponent<MykBugScript>();
             MykBug.transform.Find("e").Find("dunebug").Find("Plane").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
             {
