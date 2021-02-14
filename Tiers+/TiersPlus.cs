@@ -37,7 +37,7 @@ namespace TiersPlus
             };
             PlasmaCannonProj.GetComponentInChildren<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
             {
-                mainTexture = GadgetCoreAPI.LoadTexture2D("PlasmaCannonProj"),
+                mainTexture = GadgetCoreAPI.LoadTexture2D("items/PlasmaCannonProj"),
             };
             Vector3 particleSystemPos = PlasmaCannonProj.transform.Find("Particle System").localPosition;
             UnityEngine.Object.DestroyImmediate(PlasmaCannonProj.transform.Find("Particle System").gameObject);
@@ -65,11 +65,11 @@ namespace TiersPlus
             PlasmaLance.Register("PlasmaLance");
             PlasmaLance.OnAttack += PlasmaLance.ThrustLance;
             //plasmalance
-            PlasmaArmor = new ItemInfo(ItemType.ARMOR, "Plasmatic Armor", "", GadgetCoreAPI.LoadTexture2D("Items/PlasmaArmor"), Stats: new EquipStats(15, 10, 20, 15, 20, 15), BodyTex: GadgetCoreAPI.LoadTexture2D("Items/PlasmaArmorEquip"), ArmTex: GadgetCoreAPI.LoadTexture2D("PlasmaHand"));
+            PlasmaArmor = new ItemInfo(ItemType.ARMOR, "Plasmatic Armor", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaArmor"), Stats: new EquipStats(15, 10, 20, 15, 20, 15), BodyTex: GadgetCoreAPI.LoadTexture2D("Items/PlasmaArmorEquip"), ArmTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaHand"));
             PlasmaArmor.Register("PlasmaArmor");
-            PlasmaHelmet = new ItemInfo(ItemType.HELMET, "Plasmatic Helmet", "", GadgetCoreAPI.LoadTexture2D("Items/PlasmaHelm"), Stats: new EquipStats(20, 15, 15, 20, 15, 20), HeadTex: GadgetCoreAPI.LoadTexture2D("Items/PlasmaHelmEquip"));
+            PlasmaHelmet = new ItemInfo(ItemType.HELMET, "Plasmatic Helmet", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaHelm"), Stats: new EquipStats(20, 15, 15, 20, 15, 20), HeadTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaHelmEquip"));
             PlasmaHelmet.Register("PlasmaHelmet");
-            PlasmaShield = new ItemInfo(ItemType.OFFHAND, "Plasmatic Shield", "", GadgetCoreAPI.LoadTexture2D("Items/PlasmaShield"), Stats: new EquipStats(15, 15, 15, 15, 15, 15), HeldTex: GadgetCoreAPI.LoadTexture2D("Items/PlasmaShield"));
+            PlasmaShield = new ItemInfo(ItemType.OFFHAND, "Plasmatic Shield", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaShield"), Stats: new EquipStats(15, 15, 15, 15, 15, 15), HeldTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaShield"));
             PlasmaShield.Register("PlasmaShield");
             //equipment
             MykonogreToken = new ItemInfo(ItemType.EMBLEM, "Mykonogre Token", "A token dropped from \n Mykonogre \n used to craft items at the universal crafter.", GadgetCoreAPI.LoadTexture2D("MykonogreToken"));
@@ -191,7 +191,7 @@ namespace TiersPlus
             //plasmaZonePlanet.AddWeightedWorldSpawn();
 
             PlanetInfo MykPlanet = new PlanetInfo(PlanetType.NORMAL, "Mykonogre's Zone", new Tuple<int, int>[] { Tuple.Create(-1, 1) }, GadgetCoreAPI.LoadAudioClip("Planets/Plasma Zone/Music"));
-            MykPlanet.SetTerrainInfo(GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/Entrance"), GadgetCoreAPI.LoadTexture2D("Planets/Plasma Zone/Zone"),
+            MykPlanet.SetTerrainInfo(GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/Entrance"), GadgetCoreAPI.LoadTexture2D("Planets/Myk World/Zone"),
                 GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/MidChunkFull"), GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/MidChunkOpen"),
                 GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/SideH"), GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/SideV"));
             MykPlanet.SetBackgroundInfo(GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/Parallax"),
