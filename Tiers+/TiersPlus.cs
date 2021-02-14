@@ -31,7 +31,7 @@ namespace TiersPlus
         {
             Logger.Log("Tiers+ v" + Info.Mod.Version);
             Logger.Log("Plasmathrower v" + Info.Mod.Version);
-            PlasmaCannon = new ItemInfo(ItemType.WEAPON, "Plasmathrower", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaCannonItem"), Stats: new EquipStats(20, 0, 25, 25, 0, 0), HeldTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaCannonHeld"));
+            PlasmaCannon = new ItemInfo(ItemType.WEAPON, "Plasmathrower", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaCannonItem"), Stats: new EquipStats(20, 0, 20, 15, 0, 0), HeldTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaCannonHeld"));
             PlasmaCannon.SetWeaponInfo(new float[] { 0.25f, 0, 0.5f, 0.5f, 0, 0 }, GadgetCoreAPI.GetAttackSound(497));
             PlasmaCannon.Register("PlasmaCannon");
             GameObject PlasmaCannonProj = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetWeaponProjectileResource(471));
@@ -218,10 +218,10 @@ namespace TiersPlus
                 InstanceTracker.GameScript.GetComponent<AudioSource>().PlayOneShot((AudioClip)Resources.Load("Au/glitter"), Menuu.soundLevel / 10f);
                 return true;
             };
-            MykonogreToken.AddToLootTable("entity:mykonogre", 1.0f, 1, CustomDropBehavior: (item, pos) => {
+            //MykonogreToken.AddToLootTable("entity:mykonogre", 1.0f, 1, CustomDropBehavior: (item, pos) => {
                 //MykPlanet.PortalUses += 3;
-                return true;
-            });
+                //return true;
+            //});
         }
         public static IEnumerator CustomPlasma(PlayerScript script)
         {
