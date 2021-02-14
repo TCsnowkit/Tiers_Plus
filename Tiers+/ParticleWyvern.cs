@@ -88,25 +88,85 @@ namespace TiersPlus
 					GameObject p = (GameObject)Network.Instantiate(Resources.Load("proj/wyvernCustom"), this.t.position, Quaternion.identity, 0);
 					try
 					{
-						p.SendMessage("EnemySet", this.target.transform.position, SendMessageOptions.DontRequireReceiver);
+						Vector3 projDir = target.transform.position - transform.position;
+						projDir = Quaternion.AngleAxis(45, Vector3.forward) * projDir;
+						p.SendMessage("EnemySet", transform.position + projDir, SendMessageOptions.DontRequireReceiver);
+					}
+					catch
+					{
+					}
+					GameObject p2 = (GameObject)Network.Instantiate(Resources.Load("proj/wyvernCustom"), this.t.position, Quaternion.identity, 0);
+					try
+					{
+						Vector3 projDir = target.transform.position - transform.position;
+						projDir = Quaternion.AngleAxis(-45, Vector3.forward) * projDir;
+						p2.SendMessage("EnemySet", transform.position + projDir, SendMessageOptions.DontRequireReceiver);
+					}
+					catch
+					{
+					}
+					GameObject p3 = (GameObject)Network.Instantiate(Resources.Load("proj/wyvernCustom"), this.t.position, Quaternion.identity, 0);
+					try
+					{
+						p3.SendMessage("EnemySet", target.transform.position, SendMessageOptions.DontRequireReceiver);
 					}
 					catch
 					{
 					}
 					yield return new WaitForSeconds(timings[1]);
-					GameObject p2 = (GameObject)Network.Instantiate(Resources.Load("proj/wyvernCustom"), this.t.position, Quaternion.identity, 0);
+					GameObject p4 = (GameObject)Network.Instantiate(Resources.Load("proj/wyvernCustom"), this.t.position, Quaternion.identity, 0);
 					try
 					{
-						p2.SendMessage("EnemySet", this.target.transform.position, SendMessageOptions.DontRequireReceiver);
+						Vector3 projDir = target.transform.position - transform.position;
+						projDir = Quaternion.AngleAxis(45, Vector3.forward) * projDir;
+						p4.SendMessage("EnemySet", transform.position + projDir, SendMessageOptions.DontRequireReceiver);
+					}
+					catch
+					{
+					}
+					GameObject p5 = (GameObject)Network.Instantiate(Resources.Load("proj/wyvernCustom"), this.t.position, Quaternion.identity, 0);
+					try
+					{
+						Vector3 projDir = target.transform.position - transform.position;
+						projDir = Quaternion.AngleAxis(-45, Vector3.forward) * projDir;
+						p5.SendMessage("EnemySet", transform.position + projDir, SendMessageOptions.DontRequireReceiver);
+					}
+					catch
+					{
+					}
+					GameObject p6 = (GameObject)Network.Instantiate(Resources.Load("proj/wyvernCustom"), this.t.position, Quaternion.identity, 0);
+					try
+					{
+						p6.SendMessage("EnemySet", target.transform.position, SendMessageOptions.DontRequireReceiver);
 					}
 					catch
 					{
 					}
 					yield return new WaitForSeconds(timings[2]);
-					GameObject p3 = (GameObject)Network.Instantiate(Resources.Load("proj/wyvernCustom"), this.t.position, Quaternion.identity, 0);
+					GameObject p7 = (GameObject)Network.Instantiate(Resources.Load("proj/wyvernCustom"), this.t.position, Quaternion.identity, 0);
 					try
 					{
-						p3.SendMessage("EnemySet", this.target.transform.position, SendMessageOptions.DontRequireReceiver);
+						Vector3 projDir = target.transform.position - transform.position;
+						projDir = Quaternion.AngleAxis(45, Vector3.forward) * projDir;
+						p7.SendMessage("EnemySet", transform.position + projDir, SendMessageOptions.DontRequireReceiver);
+					}
+					catch
+					{
+					}
+					GameObject p8 = (GameObject)Network.Instantiate(Resources.Load("proj/wyvernCustom"), this.t.position, Quaternion.identity, 0);
+					try
+					{
+						Vector3 projDir = target.transform.position - transform.position;
+						projDir = Quaternion.AngleAxis(-45, Vector3.forward) * projDir;
+						p8.SendMessage("EnemySet", transform.position + projDir, SendMessageOptions.DontRequireReceiver);
+					}
+					catch
+					{
+					}
+					GameObject p9 = (GameObject)Network.Instantiate(Resources.Load("proj/wyvernCustom"), this.t.position, Quaternion.identity, 0);
+					try
+					{
+						p9.SendMessage("EnemySet", target.transform.position, SendMessageOptions.DontRequireReceiver);
 					}
 					catch
 					{

@@ -197,6 +197,36 @@ namespace TiersPlus
             EntityInfo ParticleWyvern = new EntityInfo(EntityType.COMMON, ParticleDragon).Register("ParticleWyvern");
             powerCrystalItem.AddToLootTable("entity:particleWyvern", 1.0f, 0, 4);
 
+            GameObject MykBug = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetEntityResource("spider"));
+            MykBug.name = "Mykdunebug";
+            UnityEngine.Object.Destroy(MykBug.GetComponent<SpiderScript>());
+            MykBug.AddComponent<MykBugScript>();
+            MykBug.transform.Find("e").Find("dunebug").Find("Plane").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("enemies/MykDunebug/Head"),
+            };
+            MykBug.transform.Find("e").Find("dunebug").Find("Plane_001").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("enemies/MykDunebug/Body"),
+            };
+            MykBug.transform.Find("e").Find("dunebug").Find("Plane_002").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("enemies/MykDunebug/Back"),
+            };
+            MykBug.transform.Find("e").Find("dunebug").Find("Plane_003").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("enemies/MykDunebug/Legs"),
+            };
+            MykBug.transform.Find("e").Find("dunebug").Find("Plane_004").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("enemies/MykDunebug/Wings"),
+            };
+            MykBug.transform.Find("e").Find("dunebug").Find("Plane_005").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("enemies/MykDunebug/Wings"),
+            };
+            EntityInfo MykDunebug = new EntityInfo(EntityType.COMMON, MykBug).Register("Mykdunebug");
+
 
             PlanetInfo plasmaZonePlanet = new PlanetInfo(PlanetType.NORMAL, "Plasmatic Rift", new Tuple<int, int>[] { Tuple.Create(-1, 1) }, GadgetCoreAPI.LoadAudioClip("Planets/Plasma Zone/Music"));
             plasmaZonePlanet.SetTerrainInfo(GadgetCoreAPI.LoadTexture2D("Planets/Plasma Zone/Entrance"), GadgetCoreAPI.LoadTexture2D("Planets/Plasma Zone/Zone"),
@@ -232,6 +262,7 @@ namespace TiersPlus
             MykPlanet.SetPortalInfo(GadgetCoreAPI.LoadTexture2D("Planets/Mykworld/MykSign"), GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/Button"),
                 GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/Planet"));
             MykPlanet.Register("Mykonogre Zone");
+            MykPlanet.AddWeightedWorldSpawn(MykDunebug, 1);
 
             plasmaTracerItem.OnUse += (slot) =>
             {
