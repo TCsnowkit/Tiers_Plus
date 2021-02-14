@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <!-- Set this full path to your game folder. Must contain a slash at the end. -->
+    <GamePath>E:\Steam\steamapps\common\Roguelands\</GamePath>
+
+    <!-- Set this partial path to the game's Managed folder. Must contain a slash at the end. -->
+    <ManagedFolder>Roguelands_Data\Managed\</ManagedFolder>
+  </PropertyGroup>
+</Project>
