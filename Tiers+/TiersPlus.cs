@@ -174,8 +174,29 @@ namespace TiersPlus
             ParticleDragon.name = "particleWyvern";
             UnityEngine.Object.Destroy(ParticleDragon.GetComponent<WyvernScript>());
             ParticleDragon.AddComponent<ParticleWyvernScript>();
+            ParticleDragon.transform.Find("e").Find("wyvern").Find("Plane").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("enemies/particlewyvernhead"),
+            };
+            ParticleDragon.transform.Find("e").Find("wyvern").Find("Plane_001").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("enemies/particlewyvernbody"),
+            };
+            ParticleDragon.transform.Find("e").Find("wyvern").Find("Plane_002").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("enemies/particlewyverntail"),
+            };
+            ParticleDragon.transform.Find("e").Find("wyvern").Find("Plane_003").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("enemies/particlewyvernwing"),
+            };
+            ParticleDragon.transform.Find("e").Find("wyvern").Find("Plane_004").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
+            {
+                mainTexture = GadgetCoreAPI.LoadTexture2D("enemies/particlewyvernwing"),
+            };
             EntityInfo ParticleWyvern = new EntityInfo(EntityType.COMMON, ParticleDragon).Register("ParticleWyvern");
             powerCrystalItem.AddToLootTable("entity:particleWyvern", 1.0f, 0, 4);
+
 
             PlanetInfo plasmaZonePlanet = new PlanetInfo(PlanetType.NORMAL, "Plasmatic Rift", new Tuple<int, int>[] { Tuple.Create(-1, 1) }, GadgetCoreAPI.LoadAudioClip("Planets/Plasma Zone/Music"));
             plasmaZonePlanet.SetTerrainInfo(GadgetCoreAPI.LoadTexture2D("Planets/Plasma Zone/Entrance"), GadgetCoreAPI.LoadTexture2D("Planets/Plasma Zone/Zone"),
