@@ -12,6 +12,10 @@ namespace TiersPlus
     [Gadget("Tiers+", LoadPriority: 500)]
     public class TiersPlus : Gadget<TiersPlus>
     {
+        private static readonly FieldInfo canAttack = typeof(PlayerScript).GetField("canAttack", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo attacking = typeof(PlayerScript).GetField("attacking", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo hyper = typeof(PlayerScript).GetField("hyper", BindingFlags.NonPublic | BindingFlags.Instance);
+        public static ItemInfo NebulaCannon;
         ItemInfo PlasmaCannon;
         ItemInfo MykonogreToken;
         ItemInfo FellbugToken;
@@ -55,6 +59,12 @@ namespace TiersPlus
 
             PlasmaCannon.OnAttack += TripleShot;
             //plasmacannon
+            NebulaCannon = new ItemInfo(ItemType.WEAPON, "Nebular Grenadier", "", GadgetCoreAPI.LoadTexture2D("items/NebulaCannonItem"), Stats: new EquipStats(0, 0, 5, 10, 0, 0), HeldTex: GadgetCoreAPI.LoadTexture2D("items/NebulaCannonHeld"));
+            NebulaCannon.SetWeaponInfo(new float[] { 0, 0, 0.5f, 2, 0, 0 }, GadgetCoreAPI.GetAttackSound(473));
+            NebulaCannon.Register("NebulaCannon");
+            NebulaCannon.OnAttack += CustomPlasma;
+
+
             GameObject proj = (GameObject)UnityEngine.Object.Instantiate((GameObject)Resources.Load("proj/wyvern"));
             proj.GetComponent<HazardScript>().damage = 40;
             GadgetCoreAPI.AddCustomResource("proj/wyvernCustom", proj);
@@ -146,10 +156,11 @@ namespace TiersPlus
                 Tuple.Create(new int[] { 136, 74, 136 }, new Item(plasmaTracerItem.GetID(), 1, 0, 0, 0, new int[3], new int[3]), 0)
             ));
             ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { fernEmblemItem.GetID(), powerEmblemItem.GetID(), energiteEmblemItem.GetID() }, new Item(PlasmaCannon.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
-            ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { MykonogreToken.GetID(), FellbugToken.GetID(), GladriaToken.GetID() }, new Item(PlasmaLance.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
-            ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { FellbugToken.GetID(), GladriaToken.GetID(), MykonogreToken.GetID() }, new Item(PlasmaShield.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
+            ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { energiteEmblemItem.GetID(), fernEmblemItem.GetID(), lightingEmblemItem.GetID() }, new Item(PlasmaShield.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
+            ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { energiteEmblemItem.GetID(), powerEmblemItem.GetID(), fernEmblemItem.GetID() }, new Item(PlasmaLance.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
             ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { energiteEmblemItem.GetID(), lightingEmblemItem.GetID(), fernEmblemItem.GetID() }, new Item(PlasmaArmor.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
-            ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { FellbugToken.GetID(), MykonogreToken.GetID(), GladriaToken.GetID() }, new Item(PlasmaHelmet.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
+            ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { fernEmblemItem.GetID(), lightingEmblemItem.GetID(), energiteEmblemItem.GetID() }, new Item(PlasmaHelmet.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
+            ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { powerEmblemItem.GetID(), lightingEmblemItem.GetID(), energiteEmblemItem.GetID() }, new Item(NebulaCannon.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
             GadgetCoreAPI.AddCreationMachineRecipe(powerEmblemItem.GetID(), new Item(1030, 1, 0, 0, 0, new int[3], new int[3]));
             GadgetCoreAPI.AddCreationMachineRecipe(energiteEmblemItem.GetID(), new Item(909, 1, 0, 0, 0, new int[3], new int[3]));
             GadgetCoreAPI.AddCreationMachineRecipe(fernEmblemItem.GetID(), new Item(908, 1, 0, 0, 0, new int[3], new int[3]));
@@ -191,14 +202,14 @@ namespace TiersPlus
             //plasmaZonePlanet.AddWeightedWorldSpawn();
 
             PlanetInfo MykPlanet = new PlanetInfo(PlanetType.NORMAL, "Mykonogre's Zone", new Tuple<int, int>[] { Tuple.Create(-1, 1) }, GadgetCoreAPI.LoadAudioClip("Planets/Plasma Zone/Music"));
-            MykPlanet.SetTerrainInfo(GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/Entrance"), GadgetCoreAPI.LoadTexture2D("Planets/Myk World/Zone"),
+            MykPlanet.SetTerrainInfo(GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/Entrance"), GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/Zone"),
                 GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/MidChunkFull"), GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/MidChunkOpen"),
                 GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/SideH"), GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/SideV"));
             MykPlanet.SetBackgroundInfo(GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/Parallax"),
                 GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/bg0"), GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/bg1"),
                 GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/bg2"), GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/bg3"));
-            MykPlanet.SetPortalInfo(GadgetCoreAPI.LoadTexture2D("Planets/Mykworld/MykSign"), GadgetCoreAPI.LoadTexture2D("Planets/Plasma Zone/Button"),
-                GadgetCoreAPI.LoadTexture2D("Planets/Plasma Zone/Icon"));
+            MykPlanet.SetPortalInfo(GadgetCoreAPI.LoadTexture2D("Planets/Mykworld/MykSign"), GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/Button"),
+                GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/Planet"));
             MykPlanet.Register("Mykonogre Zone");
 
             plasmaTracerItem.OnUse += (slot) =>
@@ -208,9 +219,51 @@ namespace TiersPlus
                 return true;
             };
             MykonogreToken.AddToLootTable("entity:mykonogre", 1.0f, 1, CustomDropBehavior: (item, pos) => {
-                MykPlanet.PortalUses += 3;
+                //MykPlanet.PortalUses += 3;
                 return true;
             });
+        }
+        public static IEnumerator CustomPlasma(PlayerScript script)
+        {
+            canAttack.SetValue(script, false);
+            attacking.SetValue(script, true);
+            script.StartCoroutine(script.ATKSOUND());
+            script.StartCoroutine(script.GunEffects(NebulaCannon.GetID()));
+            script.GetComponent<AudioSource>().PlayOneShot((AudioClip)Resources.Load("Au/shoot"), Menuu.soundLevel / 10f);
+            script.Animate(4);
+            yield return new WaitForSeconds(0.3f);
+            int dmg = NebulaCannon.GetDamage(script);
+            if ((bool)hyper.GetValue(script))
+            {
+                hyper.SetValue(script, false);
+                script.HyperBeam();
+            }
+            if (NebulaCannon.TryCrit(script))
+            {
+                dmg = NebulaCannon.MultiplyCrit(script, dmg);
+                script.GetComponent<AudioSource>().PlayOneShot(script.critSound, Menuu.soundLevel / 10f);
+                UnityEngine.Object.Instantiate(script.crit, script.transform.position, Quaternion.identity);
+            }
+
+            script.GetComponent<AudioSource>().PlayOneShot((AudioClip)Resources.Load("Au/plasma1"), Menuu.soundLevel / 10f);
+            int num = InstanceTracker.GameScript.GetFinalStat(3) * 2 + InstanceTracker.GameScript.GetFinalStat(2) / 2;
+            Vector3 vector = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            PackPlasma value = new PackPlasma(num, vector);
+            GameObject gameObject = (GameObject)UnityEngine.Object.Instantiate(Resources.Load("proj/plasma"), script.shot.transform.position, Quaternion.identity);
+            gameObject.SendMessage("Plasma2", value);
+            script.GetComponent<NetworkView>().RPC("ShootSpecial", RPCMode.Others, new object[]
+            {
+        1001,
+        vector,
+        num
+            });
+
+            yield return new WaitForSeconds(0.2f);
+            attacking.SetValue(script, false);
+            yield return new WaitForSeconds(0.1f);
+            canAttack.SetValue(script, true);
+            yield break;
+
         }
 
         private IEnumerator EnergyPackSpeedBoost(int power, float duration)
