@@ -13,7 +13,7 @@ namespace TiersPlus
 	public class MykBugScript : EnemyScript
 	{
 		// Token: 0x060010B9 RID: 4281 RVA: 0x0009BAE4 File Offset: 0x00099CE4
-		public void Awake()
+		public void Start()
 		{
 			this.b.GetComponent<Animation>()["a"].speed = 1.5f;
 			if (Network.isServer)
@@ -28,12 +28,6 @@ namespace TiersPlus
 			};
 			base.Initialize(12000, 80, 3000, this.drops, 300);
 			this.networkR2 = (NetworkR2)base.gameObject.GetComponent("NetworkR2");
-			if (GameScript.challengeLevel > 0)
-			{
-				this.head.GetComponent<Renderer>().material = this.blackHead;
-				this.body.GetComponent<Renderer>().material = this.blackBody;
-				this.leg.GetComponent<Renderer>().material = this.blackLeg;
-			}
 		}
 
 		// Token: 0x060010BA RID: 4282 RVA: 0x0009BBBC File Offset: 0x00099DBC
@@ -140,15 +134,6 @@ namespace TiersPlus
 
 		// Token: 0x04000F24 RID: 3876
 		public GameObject leg;
-
-		// Token: 0x04000F25 RID: 3877
-		public Material blackHead;
-
-		// Token: 0x04000F26 RID: 3878
-		public Material blackBody;
-
-		// Token: 0x04000F27 RID: 3879
-		public Material blackLeg;
 
 		// Token: 0x04000F28 RID: 3880
 		private bool charging;

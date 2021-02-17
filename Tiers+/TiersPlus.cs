@@ -165,6 +165,10 @@ namespace TiersPlus
             GadgetCoreAPI.AddCreationMachineRecipe(energiteEmblemItem.GetID(), new Item(909, 1, 0, 0, 0, new int[3], new int[3]));
             GadgetCoreAPI.AddCreationMachineRecipe(fernEmblemItem.GetID(), new Item(908, 1, 0, 0, 0, new int[3], new int[3]));
             GadgetCoreAPI.AddCreationMachineRecipe(lightingEmblemItem.GetID(), new Item(910, 1, 0, 0, 0, new int[3], new int[3]));
+            GadgetCoreAPI.AddAlchemyStationRecipe(Tuple.Create(21, 31, 11), new Item(64, 1, 0, 0, 0, new int[3], new int[3]), 3);
+            GadgetCoreAPI.AddAlchemyStationRecipe(Tuple.Create(32, 22, 12), new Item(68, 1, 0, 0, 0, new int[3], new int[3]), 3);
+            GadgetCoreAPI.AddAlchemyStationRecipe(Tuple.Create(33, 23, 13), new Item(69, 1, 0, 0, 0, new int[3], new int[3]), 3);
+            GadgetCoreAPI.AddAlchemyStationRecipe(Tuple.Create(34, 24, 14), new Item(63, 1, 0, 0, 0, new int[3], new int[3]), 3);
             //crafting recipes
 
             ObjectInfo EnergiteOre = new ObjectInfo(ObjectType.ORE, new Item(energiteItem.GetID(), 1, 0, 0, 0, new int[3], new int[3]), 1, GadgetCoreAPI.LoadTexture2D("Planets/Plasma Zone/Energite")).Register("TestObject");
@@ -199,8 +203,17 @@ namespace TiersPlus
 
             GameObject MykBug = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetEntityResource("spider"));
             MykBug.name = "Mykdunebug";
-            //UnityEngine.Object.Destroy(MykBug.GetComponent<SpiderScript>());
-            MykBug.AddComponent<MykBugScript>();
+            SpiderScript spiderScript = MykBug.GetComponent<SpiderScript>();
+            GameObject mykBugHead = spiderScript.head;
+            GameObject mykBugBody = spiderScript.body;
+            GameObject mykBugLeg = spiderScript.leg;
+            GameObject mykBugB = spiderScript.b;
+            UnityEngine.Object.Destroy(spiderScript);
+            MykBugScript mykBugScript = MykBug.AddComponent<MykBugScript>();
+            mykBugScript.head = mykBugHead;
+            mykBugScript.body = mykBugBody;
+            mykBugScript.leg = mykBugLeg;
+            mykBugScript.b = mykBugB;
             MykBug.transform.Find("e").Find("dunebug").Find("Plane").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
             {
                 mainTexture = GadgetCoreAPI.LoadTexture2D("enemies/MykDunebug/Head"),
@@ -227,6 +240,16 @@ namespace TiersPlus
             };
             EntityInfo MykDunebug = new EntityInfo(EntityType.COMMON, MykBug).Register("Mykdunebug");
 
+            //GameObject bigPlasmaDragon = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetEntityResource("lavadragon"));
+            //bigPlasmaDragon.name = "bigplasmadragon";
+            //foreach (Millipede m in bigPlasmaDragon.GetComponentsInChildren<Millipede>())
+            //{
+            //    Transform part = m.transform;
+            //    UnityEngine.Object.Destroy(m);
+            //    part.gameObject.AddComponent<PlasmaDragonScript>().isMainHead = part.name == "0";
+            //}
+            //EntityInfo bigPlasmaDerg = new EntityInfo(EntityType.BOSS, bigPlasmaDragon).Register("bigplasmadragon");
+
 
             PlanetInfo plasmaZonePlanet = new PlanetInfo(PlanetType.NORMAL, "Plasmatic Rift", new Tuple<int, int>[] { Tuple.Create(-1, 1) }, GadgetCoreAPI.LoadAudioClip("Planets/Plasma Zone/Music"));
             plasmaZonePlanet.SetTerrainInfo(GadgetCoreAPI.LoadTexture2D("Planets/Plasma Zone/Entrance"), GadgetCoreAPI.LoadTexture2D("Planets/Plasma Zone/Zone"),
@@ -242,6 +265,7 @@ namespace TiersPlus
             plasmaZonePlanet.AddWeightedWorldSpawn(ParticleWyvern, 25);
             plasmaZonePlanet.AddWeightedWorldSpawn(LightningBugTree, 15);
             plasmaZonePlanet.AddWeightedWorldSpawn(PlasmaFern, 15);
+            //plasmaZonePlanet.AddWeightedWorldSpawn(bigPlasmaDerg, 10);
             plasmaZonePlanet.AddWeightedWorldSpawn("obj/chest", 20);
             plasmaZonePlanet.AddWeightedWorldSpawn("obj/chestGold", 5);
             plasmaZonePlanet.AddWeightedTownSpawn("obj/chest", 1);
