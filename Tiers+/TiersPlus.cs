@@ -35,7 +35,7 @@ namespace TiersPlus
             Logger.Log("Tiers+ v" + Info.Mod.Version);
             Logger.Log("Plasmathrower v" + Info.Mod.Version);
             PlasmaCannon = new ItemInfo(ItemType.WEAPON, "Plasmathrower", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaCannonItem"), Stats: new EquipStats(5, 0, 10, 10, 0, 0), HeldTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaCannonHeld"));
-            PlasmaCannon.SetWeaponInfo(new float[] { 0.25f, 0, 0.5f, 0.5f, 0, 0 }, GadgetCoreAPI.GetAttackSound(497));
+            PlasmaCannon.SetWeaponInfo(new float[] { 0, 0, 0.5f, 0.25f, 0, 0 }, GadgetCoreAPI.GetAttackSound(497));
             PlasmaCannon.Register("PlasmaCannon");
             GameObject PlasmaCannonProj = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetWeaponProjectileResource(471));
             PlasmaCannonProj.GetComponentInChildren<ParticleSystemRenderer>().material = new Material(Shader.Find("Particles/Additive"))
@@ -62,7 +62,7 @@ namespace TiersPlus
 
             PlasmaCannon.OnAttack += TripleShot;
             //plasmacannon
-            NebulaCannon = new ItemInfo(ItemType.WEAPON, "Nebular Grenadier", "", GadgetCoreAPI.LoadTexture2D("items/NebulaCannonItem"), Stats: new EquipStats(0, 0, 15, 10, 0, 0), HeldTex: GadgetCoreAPI.LoadTexture2D("items/NebulaCannonHeld"));
+            NebulaCannon = new ItemInfo(ItemType.WEAPON, "Nebular Grenadier", "", GadgetCoreAPI.LoadTexture2D("items/NebulaCannonItem"), Stats: new EquipStats(0, 0, 10, 10, 0, 0), HeldTex: GadgetCoreAPI.LoadTexture2D("items/NebulaCannonHeld"));
             NebulaCannon.SetWeaponInfo(new float[] { 0, 0, 0.5f, 2, 0, 0 }, GadgetCoreAPI.GetAttackSound(473));
             NebulaCannon.Register("NebulaCannon");
             NebulaCannon.OnAttack += CustomPlasma;
@@ -73,16 +73,16 @@ namespace TiersPlus
             GadgetCoreAPI.AddCustomResource("proj/wyvernCustom", proj);
 
             //projectiles
-            PlasmaLance = new PlasmaLanceItemInfo(ItemType.WEAPON, "Plasma Lance", "", GadgetCoreAPI.LoadTexture2D("items/Plasmaspearitem"), Stats: new EquipStats(20, 40, 0, 0, 0, 0), HeldTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaSpear"));
+            PlasmaLance = new PlasmaLanceItemInfo(ItemType.WEAPON, "Plasma Lance", "", GadgetCoreAPI.LoadTexture2D("items/Plasmaspearitem"), Stats: new EquipStats(5, 20, 0, 0, 0, 0), HeldTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaSpear"));
             PlasmaLance.SetWeaponInfo(new float[] { 2f, 4f, 0, 0, 0, 0 }, GadgetCoreAPI.GetAttackSound(367));
             PlasmaLance.Register("PlasmaLance");
             PlasmaLance.OnAttack += PlasmaLance.ThrustLance;
             //plasmalance
-            PlasmaArmor = new ItemInfo(ItemType.ARMOR, "Plasmatic Armor", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaArmor"), Stats: new EquipStats(15, 10, 20, 15, 20, 15), BodyTex: GadgetCoreAPI.LoadTexture2D("Items/PlasmaArmorEquip"), ArmTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaHand"));
+            PlasmaArmor = new ItemInfo(ItemType.ARMOR, "Plasmatic Armor", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaArmor"), Stats: new EquipStats(7, 5, 10, 5, 10, 5), BodyTex: GadgetCoreAPI.LoadTexture2D("Items/PlasmaArmorEquip"), ArmTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaHand"));
             PlasmaArmor.Register("PlasmaArmor");
-            PlasmaHelmet = new ItemInfo(ItemType.HELMET, "Plasmatic Helmet", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaHelm"), Stats: new EquipStats(20, 15, 15, 20, 15, 20), HeadTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaHelmEquip"));
+            PlasmaHelmet = new ItemInfo(ItemType.HELMET, "Plasmatic Helmet", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaHelm"), Stats: new EquipStats(10, 5, 5, 10, 5, 10), HeadTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaHelmEquip"));
             PlasmaHelmet.Register("PlasmaHelmet");
-            PlasmaShield = new ItemInfo(ItemType.OFFHAND, "Plasmatic Shield", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaShield"), Stats: new EquipStats(15, 15, 15, 15, 15, 15), HeldTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaShield"));
+            PlasmaShield = new ItemInfo(ItemType.OFFHAND, "Plasmatic Shield", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaShield"), Stats: new EquipStats(7, 5, 5, 5, 5, 5), HeldTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaShield"));
             PlasmaShield.Register("PlasmaShield");
             //equipment
             MykonogreToken = new ItemInfo(ItemType.EMBLEM, "Mykonogre Token", "A token dropped from \n Mykonogre \n used to craft items at the universal crafter.", GadgetCoreAPI.LoadTexture2D("MykonogreToken"));
@@ -124,7 +124,7 @@ namespace TiersPlus
 
             ItemInfo TydusRing = new ItemInfo(ItemType.RING, "Tydus Ring", "", GadgetCoreAPI.GetItemMaterial(909), Stats: new EquipStats(0,0,3,3,0,0)).Register(909);
             ItemInfo OwainPearl = new ItemInfo(ItemType.RING, "Owain's Pearl", "", GadgetCoreAPI.LoadTexture2D("Items/OwainPearl"), Stats: new EquipStats(2, 1, 1, 1, 1, 1)).Register("OwainRing", 908);
-            ItemInfo VaatiBadge = new ItemInfo(ItemType.RING, "Vaati Badge", "", GadgetCoreAPI.GetItemMaterial(910), Stats: new EquipStats(2, 0, 2, 0, 1, 1)).Register(910);
+            ItemInfo VaatiBadge = new ItemInfo(ItemType.RING, "Vaati Badge", "", GadgetCoreAPI.GetItemMaterial(910), Stats: new EquipStats(2, 0, 2, 0, 2, 1)).Register(910);
             
             healthPack4Item.OnUse += (slot) =>
             {
