@@ -7,6 +7,9 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using RecipeMenuCore;
+using RecipeMenuCore.API;
+
 namespace TiersPlus
 {
     [Gadget("Tiers+", LoadPriority: 500)]
@@ -25,7 +28,7 @@ namespace TiersPlus
         ItemInfo PlasmaHelmet;
         ItemInfo PlasmaShield;
         public const string MOD_VERSION = "1.0.5";
-        public const string CONFIG_VERSION = "1.0";
+        public const string CONFIG_VERSION = "1.0.5";
 
         protected override void Initialize()
         {
@@ -295,9 +298,23 @@ namespace TiersPlus
                 return true;
             };
             //MykonogreToken.AddToLootTable("entity:mykonogre", 1.0f, 1, CustomDropBehavior: (item, pos) => {
-                //MykPlanet.PortalUses += 3;
-                //return true;
+            //MykPlanet.PortalUses += 3;
+            //return true;
             //});
+            var recAlchemy = new RecipePage(RecipePageType.AlchemyStation, "Stamina/Misc. Recipes", GadgetCoreAPI.LoadTexture2D("recipesAlch.png")).RegisterAsVanilla(1);
+            recAlchemy.AddRecipePageEntry(new RecipePageEntry(21, 11, 31, 62, 1, 2));
+            recAlchemy.AddRecipePageEntry(new RecipePageEntry(22, 12, 32, 62, 4, 3));
+            recAlchemy.AddRecipePageEntry(new RecipePageEntry(33, 13, 23, 67, 1, 2));
+            recAlchemy.AddRecipePageEntry(new RecipePageEntry(34, 14, 24, 67, 4, 3));
+            recAlchemy.AddRecipePageEntry(new RecipePageEntry(35, 15, 25, 72, 1, 2));
+            recAlchemy.AddRecipePageEntry(new RecipePageEntry(26, 36, 16, 72, 4, 3));
+
+            recAlchemy.AddRecipePageEntry(new RecipePageEntry(21, 31, 11, 64, 1, 2));
+            recAlchemy.AddRecipePageEntry(new RecipePageEntry(32, 32, 12, 68, 1, 2));
+            recAlchemy.AddRecipePageEntry(new RecipePageEntry(33, 23, 13, 69, 1, 2));
+            recAlchemy.AddRecipePageEntry(new RecipePageEntry(34, 24, 14, 63, 1, 2)); // Nuldmg
+            recAlchemy.AddRecipePageEntry(new RecipePageEntry(35, 25, 15, 73, 1, 2));
+            recAlchemy.AddRecipePageEntry(new RecipePageEntry(36, 16, 26, 74, 1, 2));
         }
         public static IEnumerator CustomPlasma(PlayerScript script)
         {

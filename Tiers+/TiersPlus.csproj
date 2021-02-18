@@ -43,6 +43,10 @@
 			<HintPath>$(GamePath)$(ManagedFolder)GadgetCore.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
+		<Reference Include="RecipeMenuCore">
+		  <HintPath>..\..\RecipeMenuCore.dll</HintPath>
+		  <SpecificVersion>False</SpecificVersion>
+		</Reference>
 		<Reference Include="UnityEngine">
 			<HintPath>$(GamePath)$(ManagedFolder)UnityEngine.dll</HintPath>
 			<Private>false</Private>
