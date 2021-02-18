@@ -153,7 +153,7 @@ namespace TiersPlus
             GadgetCoreAPI.AddAlchemyStationRecipe(Tuple.Create(plasmaFernItem.GetID(), powerCrystalItem.GetID(), lightingBugItem.GetID()), new Item(healthPack4Item.GetID(), 1, 0, 0, 0, new int[3], new int[3]), 2);
             GadgetCoreAPI.AddAlchemyStationRecipe(Tuple.Create(plasmaFernItem.GetID(), lightingBugItem.GetID(), powerCrystalItem.GetID()), new Item(manaPack4Item.GetID(), 1, 0, 0, 0, new int[3], new int[3]), 2);
             GadgetCoreAPI.AddAlchemyStationRecipe(Tuple.Create(lightingBugItem.GetID(), plasmaFernItem.GetID(), powerCrystalItem.GetID()), new Item(energyPack4Item.GetID(), 1, 0, 0, 0, new int[3], new int[3]), 2);
-            GadgetCoreAPI.AddAlchemyStationRecipe(Tuple.Create(lightingBugItem.GetID(), powerCrystalItem.GetID(), plasmaFernItem.GetID()), new Item(63, 4, 0, 0, 0, new int[3], new int[3]), 10);
+            GadgetCoreAPI.AddAlchemyStationRecipe(Tuple.Create(lightingBugItem.GetID(), powerCrystalItem.GetID(), plasmaFernItem.GetID()), new Item(63, 4, 0, 0, 0, new int[3], new int[3]), 3);
 
             ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(
                 Tuple.Create(new int[] { 136, 74, 136 }, new Item(plasmaTracerItem.GetID(), 1, 0, 0, 0, new int[3], new int[3]), 0)
