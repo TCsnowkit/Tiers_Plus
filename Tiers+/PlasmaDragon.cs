@@ -14,7 +14,7 @@ namespace TiersPlus
 	public class PlasmaDragonScript : MonoBehaviour
 	{
 		// Token: 0x0600005D RID: 93 RVA: 0x000046FC File Offset: 0x000028FC
-		public void Awake()
+		public void Start()
 		{
 			this.hp = 2600000 + GameScript.challengeLevel * 8000;
 			this.speed = 26f;

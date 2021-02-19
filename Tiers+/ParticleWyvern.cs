@@ -46,7 +46,7 @@ namespace TiersPlus
 			0,
 			0
 			};
-			base.Initialize(3400, 49, 600, this.drops, 110);
+			base.Initialize(2700, 70, 600, this.drops, 110);
 			this.b.GetComponent<Animation>()["a"].layer = 2;
 			if (Network.isServer)
 			{

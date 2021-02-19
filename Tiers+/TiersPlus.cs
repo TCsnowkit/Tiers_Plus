@@ -62,6 +62,14 @@ namespace TiersPlus
 
             PlasmaCannon.OnAttack += TripleShot;
             //plasmacannon
+            ItemInfo
+            particleAccelerator = new ItemInfo(ItemType.WEAPON, "Particle Accelerator", "", GadgetCoreAPI.LoadTexture2D("items/ParticleAccItem"), Stats: new EquipStats(3, 0, 7, 0, 7, 3), HeldTex: GadgetCoreAPI.LoadTexture2D("items/ParticleAccHeld"));
+            particleAccelerator.SetWeaponInfo(new float[] { 0, 0, 1.75f, 0, 1, 0 }, GadgetCoreAPI.GetAttackSound(426));
+            particleAccelerator.Register("ParticleAcc");
+            GameObject particleAccProj = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetWeaponProjectileResource(427));
+            GadgetCoreAPI.AddCustomResource("proj/shot" + particleAccelerator.GetID(), particleAccProj);
+            particleAccelerator.OnAttack += particleAccelerator.ShootGun;
+
             NebulaCannon = new ItemInfo(ItemType.WEAPON, "Nebular Grenadier", "", GadgetCoreAPI.LoadTexture2D("items/NebulaCannonItem"), Stats: new EquipStats(0, 0, 10, 10, 0, 0), HeldTex: GadgetCoreAPI.LoadTexture2D("items/NebulaCannonHeld"));
             NebulaCannon.SetWeaponInfo(new float[] { 0, 0, 0.5f, 2, 0, 0 }, GadgetCoreAPI.GetAttackSound(473));
             NebulaCannon.Register("NebulaCannon");
@@ -243,6 +251,15 @@ namespace TiersPlus
             };
             EntityInfo MykDunebug = new EntityInfo(EntityType.COMMON, MykBug).Register("Mykdunebug");
 
+            GameObject testProjEnemy = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetEntityResource("sponge"));
+            testProjEnemy.name = "testProjEnemy";
+            UnityEngine.Object.Destroy(ParticleDragon.GetComponent<SpongeScript>());
+            ParticleDragon.AddComponent<TestProjScript>();
+            EntityInfo TestProjEnemy = new EntityInfo(EntityType.COMMON, testProjEnemy).Register("testProjEnemy");
+            manaPack4Item.AddToLootTable("entity:testProjEnemy", 1.0f, 0, 2);
+            powerCrystalItem.AddToLootTable("entity:testProjEnemy", 0.5f, 0, 4);
+
+
             //GameObject bigPlasmaDragon = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetEntityResource("lavadragon"));
             //bigPlasmaDragon.name = "bigplasmadragon";
             //foreach (Millipede m in bigPlasmaDragon.GetComponentsInChildren<Millipede>())
@@ -254,7 +271,7 @@ namespace TiersPlus
             //EntityInfo bigPlasmaDerg = new EntityInfo(EntityType.BOSS, bigPlasmaDragon).Register("bigplasmadragon");
 
 
-            PlanetInfo plasmaZonePlanet = new PlanetInfo(PlanetType.NORMAL, "Plasmatic Rift", new Tuple<int, int>[] { Tuple.Create(-1, 1) }, GadgetCoreAPI.LoadAudioClip("Planets/Plasma Zone/Music"));
+            PlanetInfo plasmaZonePlanet = new PlanetInfo(PlanetType.NORMAL, "Plasmatic Rift", new Tuple<int, int>[] { Tuple.Create(-1, 1), Tuple.Create(13, 1) }, GadgetCoreAPI.LoadAudioClip("Planets/Plasma Zone/Music"));
             plasmaZonePlanet.SetTerrainInfo(GadgetCoreAPI.LoadTexture2D("Planets/Plasma Zone/Entrance"), GadgetCoreAPI.LoadTexture2D("Planets/Plasma Zone/Zone"),
                 GadgetCoreAPI.LoadTexture2D("Planets/Plasma Zone/MidChunkFull"), GadgetCoreAPI.LoadTexture2D("Planets/Plasma Zone/MidChunkOpen"),
                 GadgetCoreAPI.LoadTexture2D("Planets/Plasma Zone/SideH"), GadgetCoreAPI.LoadTexture2D("Planets/Plasma Zone/SideV"));
@@ -268,16 +285,18 @@ namespace TiersPlus
             plasmaZonePlanet.AddWeightedWorldSpawn(ParticleWyvern, 25);
             plasmaZonePlanet.AddWeightedWorldSpawn(LightningBugTree, 15);
             plasmaZonePlanet.AddWeightedWorldSpawn(PlasmaFern, 15);
+            plasmaZonePlanet.AddWeightedWorldSpawn(TestProjEnemy, 15);
             //plasmaZonePlanet.AddWeightedWorldSpawn(bigPlasmaDerg, 10);
             plasmaZonePlanet.AddWeightedWorldSpawn("obj/chest", 20);
             plasmaZonePlanet.AddWeightedWorldSpawn("obj/chestGold", 5);
-            plasmaZonePlanet.AddWeightedTownSpawn("obj/chest", 1);
-            plasmaZonePlanet.AddWeightedTownSpawn("obj/itemStand", 2);
-            plasmaZonePlanet.AddWeightedTownSpawn("obj/chipStand", 2);
+            plasmaZonePlanet.AddWeightedTownSpawn("obj/chest", 25);
+            plasmaZonePlanet.AddWeightedTownSpawn("obj/itemStand", 25);
+            plasmaZonePlanet.AddWeightedTownSpawn("obj/chipStand", 25);
             plasmaZonePlanet.AddWeightedWorldSpawn((pos) => (GameObject)null, 2);
-            plasmaZonePlanet.AddWeightedTownSpawn((pos) => (GameObject)null, 2);
+            plasmaZonePlanet.AddWeightedTownSpawn((pos) => (GameObject)null, 25);
             plasmaZonePlanet.AddWeightedWorldSpawn("obj/relic", 5);
             //plasmaZonePlanet.AddWeightedWorldSpawn();
+            PlanetRegistry.SetVanillaExitPortalWeight(13, plasmaZonePlanet.GetID(), 75);
 
             PlanetInfo MykPlanet = new PlanetInfo(PlanetType.NORMAL, "Mykonogre's Zone", new Tuple<int, int>[] { Tuple.Create(-1, 1) }, GadgetCoreAPI.LoadAudioClip("Planets/Plasma Zone/Music"));
             MykPlanet.SetTerrainInfo(GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/Entrance"), GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/Zone"),
@@ -316,6 +335,7 @@ namespace TiersPlus
             recAlchemy.AddRecipePageEntry(new RecipePageEntry(35, 25, 15, 73, 1, 2));
             recAlchemy.AddRecipePageEntry(new RecipePageEntry(36, 16, 26, 74, 1, 2));
         }
+
         public static IEnumerator CustomPlasma(PlayerScript script)
         {
             canAttack.SetValue(script, false);
@@ -377,13 +397,10 @@ namespace TiersPlus
         {
             script.StartCoroutine(PlasmaCannon.ShootGun(script));
             script.StartCoroutine(PlasmaCannon.ShootGun(script));
-            script.StartCoroutine(PlasmaCannon.ShootGun(script));
             yield return new WaitForSeconds(0.2f);
             script.StartCoroutine(PlasmaCannon.ShootGun(script));
             script.StartCoroutine(PlasmaCannon.ShootGun(script));
-            script.StartCoroutine(PlasmaCannon.ShootGun(script));
             yield return new WaitForSeconds(0.2f);
-            script.StartCoroutine(PlasmaCannon.ShootGun(script));
             script.StartCoroutine(PlasmaCannon.ShootGun(script));
             script.StartCoroutine(PlasmaCannon.ShootGun(script));
             yield return new WaitForSeconds(0.2f);
