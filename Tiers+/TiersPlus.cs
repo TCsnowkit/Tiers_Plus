@@ -253,8 +253,8 @@ namespace TiersPlus
 
             GameObject testProjEnemy = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetEntityResource("sponge"));
             testProjEnemy.name = "testProjEnemy";
-            UnityEngine.Object.Destroy(ParticleDragon.GetComponent<SpongeScript>());
-            ParticleDragon.AddComponent<TestProjScript>();
+            testProjEnemy.SetActive(false);
+            testProjEnemy.ReplaceComponent<SpongeScript, TestProjScript>();
             EntityInfo TestProjEnemy = new EntityInfo(EntityType.COMMON, testProjEnemy).Register("testProjEnemy");
             manaPack4Item.AddToLootTable("entity:testProjEnemy", 1.0f, 0, 2);
             powerCrystalItem.AddToLootTable("entity:testProjEnemy", 0.5f, 0, 4);
