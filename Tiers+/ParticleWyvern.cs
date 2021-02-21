@@ -46,7 +46,7 @@ namespace TiersPlus
 			0,
 			0
 			};
-			base.Initialize(2700, 70, 600, this.drops, 110);
+			base.Initialize(2700, 69, 600, this.drops, 110);
 			this.b.GetComponent<Animation>()["a"].layer = 2;
 			if (Network.isServer)
 			{
@@ -114,21 +114,11 @@ namespace TiersPlus
 					{
 					}
 					yield return new WaitForSeconds(timings[1]);
-					GameObject p4 = (GameObject)Network.Instantiate(Resources.Load("proj/wyvernCustom"), this.t.position, Quaternion.identity, 0);
-					try
-					{
-						Vector3 projDir = target.transform.position - transform.position;
-						projDir = Quaternion.AngleAxis(45, Vector3.forward) * projDir;
-						p4.SendMessage("EnemySet", transform.position + projDir, SendMessageOptions.DontRequireReceiver);
-					}
-					catch
-					{
-					}
 					GameObject p5 = (GameObject)Network.Instantiate(Resources.Load("proj/wyvernCustom"), this.t.position, Quaternion.identity, 0);
 					try
 					{
 						Vector3 projDir = target.transform.position - transform.position;
-						projDir = Quaternion.AngleAxis(-45, Vector3.forward) * projDir;
+						projDir = Quaternion.AngleAxis(15, Vector3.forward) * projDir;
 						p5.SendMessage("EnemySet", transform.position + projDir, SendMessageOptions.DontRequireReceiver);
 					}
 					catch
@@ -137,17 +127,18 @@ namespace TiersPlus
 					GameObject p6 = (GameObject)Network.Instantiate(Resources.Load("proj/wyvernCustom"), this.t.position, Quaternion.identity, 0);
 					try
 					{
-						p6.SendMessage("EnemySet", target.transform.position, SendMessageOptions.DontRequireReceiver);
+						Vector3 projDir = target.transform.position - transform.position;
+						projDir = Quaternion.AngleAxis(-15, Vector3.forward) * projDir;
+						p6.SendMessage("EnemySet", transform.position + projDir, SendMessageOptions.DontRequireReceiver);
 					}
 					catch
 					{
 					}
-					yield return new WaitForSeconds(timings[2]);
 					GameObject p7 = (GameObject)Network.Instantiate(Resources.Load("proj/wyvernCustom"), this.t.position, Quaternion.identity, 0);
 					try
 					{
 						Vector3 projDir = target.transform.position - transform.position;
-						projDir = Quaternion.AngleAxis(45, Vector3.forward) * projDir;
+						projDir = Quaternion.AngleAxis(65, Vector3.forward) * projDir;
 						p7.SendMessage("EnemySet", transform.position + projDir, SendMessageOptions.DontRequireReceiver);
 					}
 					catch
@@ -157,16 +148,37 @@ namespace TiersPlus
 					try
 					{
 						Vector3 projDir = target.transform.position - transform.position;
-						projDir = Quaternion.AngleAxis(-45, Vector3.forward) * projDir;
+						projDir = Quaternion.AngleAxis(-65, Vector3.forward) * projDir;
 						p8.SendMessage("EnemySet", transform.position + projDir, SendMessageOptions.DontRequireReceiver);
 					}
 					catch
 					{
 					}
+					yield return new WaitForSeconds(timings[2]);
 					GameObject p9 = (GameObject)Network.Instantiate(Resources.Load("proj/wyvernCustom"), this.t.position, Quaternion.identity, 0);
 					try
 					{
-						p9.SendMessage("EnemySet", target.transform.position, SendMessageOptions.DontRequireReceiver);
+						Vector3 projDir = target.transform.position - transform.position;
+						projDir = Quaternion.AngleAxis(45, Vector3.forward) * projDir;
+						p9.SendMessage("EnemySet", transform.position + projDir, SendMessageOptions.DontRequireReceiver);
+					}
+					catch
+					{
+					}
+					GameObject p10 = (GameObject)Network.Instantiate(Resources.Load("proj/wyvernCustom"), this.t.position, Quaternion.identity, 0);
+					try
+					{
+						Vector3 projDir = target.transform.position - transform.position;
+						projDir = Quaternion.AngleAxis(-45, Vector3.forward) * projDir;
+						p10.SendMessage("EnemySet", transform.position + projDir, SendMessageOptions.DontRequireReceiver);
+					}
+					catch
+					{
+					}
+					GameObject p11 = (GameObject)Network.Instantiate(Resources.Load("proj/wyvernCustom"), this.t.position, Quaternion.identity, 0);
+					try
+					{
+						p11.SendMessage("EnemySet", target.transform.position, SendMessageOptions.DontRequireReceiver);
 					}
 					catch
 					{

@@ -64,10 +64,11 @@ namespace TiersPlus
             //plasmacannon
             ItemInfo
             particleAccelerator = new ItemInfo(ItemType.WEAPON, "Particle Accelerator", "", GadgetCoreAPI.LoadTexture2D("items/ParticleAccItem"), Stats: new EquipStats(3, 0, 7, 0, 7, 3), HeldTex: GadgetCoreAPI.LoadTexture2D("items/ParticleAccHeld"));
-            particleAccelerator.SetWeaponInfo(new float[] { 0, 0, 1.75f, 0, 1, 0 }, GadgetCoreAPI.GetAttackSound(426));
+            particleAccelerator.SetWeaponInfo(new float[] { 0, 0, 1.5f, 0, 1, 0 }, GadgetCoreAPI.GetAttackSound(426));
             particleAccelerator.Register("ParticleAcc");
             GameObject particleAccProj = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetWeaponProjectileResource(427));
             GadgetCoreAPI.AddCustomResource("proj/shot" + particleAccelerator.GetID(), particleAccProj);
+            particleAccProj.GetComponent<Projectile>().speed = 45;
             particleAccelerator.OnAttack += particleAccelerator.ShootGun;
 
             NebulaCannon = new ItemInfo(ItemType.WEAPON, "Nebular Grenadier", "", GadgetCoreAPI.LoadTexture2D("items/NebulaCannonItem"), Stats: new EquipStats(0, 0, 10, 10, 0, 0), HeldTex: GadgetCoreAPI.LoadTexture2D("items/NebulaCannonHeld"));
@@ -75,10 +76,21 @@ namespace TiersPlus
             NebulaCannon.Register("NebulaCannon");
             NebulaCannon.OnAttack += CustomPlasma;
 
+            ItemInfo plantain = new ItemInfo(ItemType.WEAPON, "Plantain", "", GadgetCoreAPI.LoadTexture2D("items/PlantainItem"), Stats: new EquipStats(0, 0, 0, 0, 10, 7), HeldTex: GadgetCoreAPI.LoadTexture2D("items/PlantainHeld"));
+            plantain.SetWeaponInfo(new float[] { 0, 0, 0, 0, 1.5f, 0.5f }, GadgetCoreAPI.GetAttackSound(529));
+            plantain.Register("Plantain");
+            GameObject plantainProj = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetWeaponProjectileResource(596));
+            GadgetCoreAPI.AddCustomResource("proj/shot" + plantain.GetID(), plantainProj);
+            plantainProj.GetComponent<Projectile>().speed = 45;
+            plantain.OnAttack += plantain.CastGauntlet;
 
             GameObject proj = (GameObject)UnityEngine.Object.Instantiate((GameObject)Resources.Load("proj/wyvern"));
             proj.GetComponent<HazardScript>().damage = 40;
             GadgetCoreAPI.AddCustomResource("proj/wyvernCustom", proj);
+
+            GameObject proj2 = (GameObject)UnityEngine.Object.Instantiate((GameObject)Resources.Load("proj/spongeProj"));
+            proj2.GetComponent<HazardScript>().damage = 45;
+            GadgetCoreAPI.AddCustomResource("proj/spongeProjCustom", proj2);
 
             //projectiles
             PlasmaLance = new PlasmaLanceItemInfo(ItemType.WEAPON, "Plasma Lance", "", GadgetCoreAPI.LoadTexture2D("items/Plasmaspearitem"), Stats: new EquipStats(5, 20, 0, 0, 0, 0), HeldTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaSpear"));
@@ -261,15 +273,18 @@ namespace TiersPlus
             powerCrystalItem.AddToLootTable("entity:testProjEnemy", 0.5f, 0, 4);
 
 
-            //GameObject bigPlasmaDragon = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetEntityResource("lavadragon"));
-            //bigPlasmaDragon.name = "bigplasmadragon";
-            //foreach (Millipede m in bigPlasmaDragon.GetComponentsInChildren<Millipede>())
-            //{
-            //    Transform part = m.transform;
-            //    UnityEngine.Object.Destroy(m);
-            //    part.gameObject.AddComponent<PlasmaDragonScript>().isMainHead = part.name == "0";
-            //}
-            //EntityInfo bigPlasmaDerg = new EntityInfo(EntityType.BOSS, bigPlasmaDragon).Register("bigplasmadragon");
+            GameObject lavadragonPrefab = GadgetCoreAPI.GetEntityResource("lavadragon");
+            lavadragonPrefab.SetActive(false);
+            GameObject bigPlasmaDragon = UnityEngine.Object.Instantiate(lavadragonPrefab);
+            bigPlasmaDragon.name = "bigplasmadragon";
+            foreach (Millipede m in bigPlasmaDragon.GetComponentsInChildren<Millipede>())
+            {
+            //Transform part = m.transform;
+
+            m.gameObject.ReplaceComponent<Millipede, PlasmaDragonScript>();
+            //part.gameObject.AddComponent<PlasmaDragonScript>().isMainHead = part.name == "0";
+            }
+            EntityInfo bigPlasmaDerg = new EntityInfo(EntityType.BOSS, bigPlasmaDragon).Register("bigplasmadragon");
 
 
             PlanetInfo plasmaZonePlanet = new PlanetInfo(PlanetType.NORMAL, "Plasmatic Rift", new Tuple<int, int>[] { Tuple.Create(-1, 1), Tuple.Create(13, 1) }, GadgetCoreAPI.LoadAudioClip("Planets/Plasma Zone/Music"));

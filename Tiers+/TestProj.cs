@@ -28,16 +28,14 @@ namespace TiersPlus
 			23,
 			23
 			};
-			base.Initialize(200, 4, 200, this.drops, 150);
+			base.Initialize(200, 59, 200, this.drops, 150);
 			this.networkR2 = (NetworkR2)base.gameObject.GetComponent("NetworkR2");
 
 		}
 		public void Start()
         {
-			TiersPlus.GetSingleton().Logger.LogConsole("test");
 			if (Network.isServer)
 			{
-				TiersPlus.GetSingleton().Logger.LogConsole("test2");
 				this.r.useGravity = true;
 			}
 		}
@@ -61,7 +59,7 @@ namespace TiersPlus
 						this.shooting = true;
 						base.GetComponent<NetworkView>().RPC("MakeFace", RPCMode.All, new object[0]);
 						yield return new WaitForSeconds(1f);
-						GameObject p = (GameObject)Network.Instantiate(Resources.Load("proj/spongeProj"), this.t.position, Quaternion.identity, 0);
+						GameObject p = (GameObject)Network.Instantiate(Resources.Load("proj/spongeProjCustom"), this.t.position, Quaternion.identity, 0);
 						p.SendMessage("EnemySet", this.target.transform.position, SendMessageOptions.DontRequireReceiver);
 						if (this.target.transform.position.x > this.t.position.x)
 						{

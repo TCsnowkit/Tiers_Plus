@@ -14,11 +14,12 @@ namespace TiersPlus
 	public class PlasmaDragonScript : MonoBehaviour
 	{
 		// Token: 0x0600005D RID: 93 RVA: 0x000046FC File Offset: 0x000028FC
-		public void Start()
+		public void Awake()
 		{
-			this.hp = 2600000 + GameScript.challengeLevel * 8000;
+			this.hp = 85000 + GameScript.challengeLevel * 8000;
 			this.speed = 26f;
 			this.exp = 9999 + GameScript.challengeLevel * 500;
+
 			if (Network.isServer)
 			{
 				base.StartCoroutine(this.Shoot());
@@ -47,16 +48,10 @@ namespace TiersPlus
 					Vector3 targetPos = new Vector3(base.transform.position.x + (float)UnityEngine.Random.Range(-100, 101), this.t.position.y + (float)UnityEngine.Random.Range(-100, 101), 0f);
 					yield return new WaitForSeconds(0.5f);
 					base.GetComponent<NetworkView>().RPC("Au", RPCMode.All, new object[0]);
-					if (UnityEngine.Random.Range(0, 4) == 0)
-					{
-						GameObject gameObject = (GameObject)Network.Instantiate(this.mykOrb, this.t.position, Quaternion.identity, 0);
-						gameObject.SendMessage("EnemySet", targetPos, SendMessageOptions.DontRequireReceiver);
-					}
-					else
-					{
-						GameObject gameObject2 = (GameObject)Network.Instantiate(this.mykMeteor, this.t.position, Quaternion.identity, 0);
-						gameObject2.SendMessage("EnemySet", targetPos, SendMessageOptions.DontRequireReceiver);
-					}
+					
+					GameObject gameObject = (GameObject)Network.Instantiate(this.mykOrb, this.t.position, Quaternion.identity, 0);
+					gameObject.SendMessage("EnemySet", targetPos, SendMessageOptions.DontRequireReceiver);
+					
 					
 				}
 			}
@@ -194,7 +189,7 @@ namespace TiersPlus
 							Camera.main.GetComponent<NetworkView>().RPC("dVict4", RPCMode.All, new object[0]);
 						}
 						base.GetComponent<NetworkView>().RPC("Hide", RPCMode.Others, new object[0]);
-						base.GetComponent<NetworkView>().RPC("Uru", RPCMode.All, new object[0]);
+						TiersPlus.GetSingleton().Logger.LogConsole(isMainHead + ": " + (wormDisassemble != null ? wormDisassemble.name : "null"));
 						base.StartCoroutine(this.Die());
 					}
 				}
@@ -215,7 +210,7 @@ namespace TiersPlus
 		[RPC]
 		public void DropLocal()
 		{
-			GameScript.record[SpawnerScript.curBiome]++;
+
 			if (this.enemyID > 0)
 			{
 				Camera.main.SendMessage("EnemyID", this.enemyID);
@@ -482,7 +477,8 @@ namespace TiersPlus
 				}
 			}
 			yield return new WaitForSeconds(3f);
-			this.wormDisassemble.SendMessage("Die");
+			TiersPlus.GetSingleton().Logger.LogConsole(wormDisassemble.GetComponent<WormDisassemble>() == null ? "Is null" : "Is not null");
+			wormDisassemble.GetComponent<WormDisassemble>().Die();
 			yield break;
 		}
 
