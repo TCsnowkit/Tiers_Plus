@@ -46,7 +46,7 @@ namespace TiersPlus
 			0,
 			0
 			};
-			base.Initialize(2700, 69, 600, this.drops, 110);
+			base.Initialize(2700, 69, 600, this.drops, 510);
 			this.b.GetComponent<Animation>()["a"].layer = 2;
 			if (Network.isServer)
 			{
@@ -82,7 +82,7 @@ namespace TiersPlus
 				if (this.target && Vector3.Distance(this.target.transform.position, this.t.position) < 20f)
 				{
 					this.shooting = true;
-					float[] timings = new float[] { UnityEngine.Random.Range(0.4f, 0.12f), UnityEngine.Random.Range(0.2f, 0.6f), UnityEngine.Random.Range(0.1f, 0.3f) };
+					float[] timings = new float[] { UnityEngine.Random.Range(0.4f, 0.12f), UnityEngine.Random.Range(0.2f, 0.6f), UnityEngine.Random.Range(0.2f, 0.4f) };
 					base.GetComponent<NetworkView>().RPC("MakeFace", RPCMode.All, new object[] { timings } );
 					yield return new WaitForSeconds(timings[0]);
 					GameObject p = (GameObject)Network.Instantiate(Resources.Load("proj/wyvernCustom"), this.t.position, Quaternion.identity, 0);

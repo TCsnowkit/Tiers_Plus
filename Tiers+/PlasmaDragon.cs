@@ -44,13 +44,13 @@ namespace TiersPlus
 				yield return new WaitForSeconds(0.5f);
 				if (UnityEngine.Random.Range(0, 5) == 0)
 				{
-					this.r.velocity = new Vector3(0f, 0f, 0f);
-					Vector3 targetPos = new Vector3(base.transform.position.x + (float)UnityEngine.Random.Range(-100, 101), this.t.position.y + (float)UnityEngine.Random.Range(-100, 101), 0f);
-					yield return new WaitForSeconds(0.5f);
-					base.GetComponent<NetworkView>().RPC("Au", RPCMode.All, new object[0]);
+					//this.r.velocity = new Vector3(0f, 0f, 0f);
+					//Vector3 targetPos = new Vector3(base.transform.position.x + (float)UnityEngine.Random.Range(-100, 101), this.t.position.y + (float)UnityEngine.Random.Range(-100, 101), 0f);
+					//yield return new WaitForSeconds(0.5f);
+					//base.GetComponent<NetworkView>().RPC("Au", RPCMode.All, new object[0]);
 					
-					GameObject gameObject = (GameObject)Network.Instantiate(this.mykOrb, this.t.position, Quaternion.identity, 0);
-					gameObject.SendMessage("EnemySet", targetPos, SendMessageOptions.DontRequireReceiver);
+					//GameObject gameObject = (GameObject)Network.Instantiate(this.mykOrb, this.t.position, Quaternion.identity, 0);
+					//gameObject.SendMessage("EnemySet", targetPos, SendMessageOptions.DontRequireReceiver);
 					
 					
 				}

@@ -28,7 +28,7 @@ namespace TiersPlus
 			23,
 			23
 			};
-			base.Initialize(200, 59, 200, this.drops, 150);
+			base.Initialize(3000, 59, 800, this.drops, 600);
 			this.networkR2 = (NetworkR2)base.gameObject.GetComponent("NetworkR2");
 
 		}
