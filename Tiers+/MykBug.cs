@@ -13,7 +13,7 @@ namespace TiersPlus
 	public class MykBugScript : EnemyScript
 	{
 		// Token: 0x060010B9 RID: 4281 RVA: 0x0009BAE4 File Offset: 0x00099CE4
-		public void Start()
+		public void Awake()
 		{
 			this.b.GetComponent<Animation>()["a"].speed = 1.5f;
 			if (Network.isServer)
@@ -26,7 +26,7 @@ namespace TiersPlus
 			21,
 			21
 			};
-			base.Initialize(12000, 80, 6000, this.drops, 300);
+			base.Initialize(12000, 80, 3000, this.drops, 300);
 			this.networkR2 = (NetworkR2)base.gameObject.GetComponent("NetworkR2");
 		}
 

@@ -88,6 +88,17 @@ namespace TiersPlus
             };
             plantain.OnAttack += plantain.CastStaff;
 
+            ItemInfo closeCombatant = new ItemInfo(ItemType.WEAPON, "Close Combatant", "", GadgetCoreAPI.LoadTexture2D("items/ParticleGauntlet"), Stats: new EquipStats(0, 8, 0, 0, 7, 0), HeldTex: GadgetCoreAPI.LoadTexture2D("items/Blank"));
+            closeCombatant.SetWeaponInfo(new float[] { 0, 0.5f, 0, 0, 1f, 0 }, GadgetCoreAPI.GetAttackSound(523));
+            closeCombatant.Register("CloseCombat");
+            GameObject closeCombatProj = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetWeaponProjectileResource(523));
+            GadgetCoreAPI.AddCustomResource("proj/shot" + closeCombatant.GetID(), closeCombatProj);
+            closeCombatProj.GetComponent<Projectile>().speed = 0;
+            closeCombatant.OnAttack += closeCombatant.CastGauntlet;
+            closeCombatant.OnAttack += closeCombatant.CastGauntlet;
+            closeCombatant.OnAttack += closeCombatant.CastGauntlet;
+            closeCombatant.OnAttack += closeCombatant.CastGauntlet;
+
             GameObject proj = (GameObject)UnityEngine.Object.Instantiate((GameObject)Resources.Load("proj/wyvern"));
             proj.GetComponent<HazardScript>().damage = 40;
             GadgetCoreAPI.AddCustomResource("proj/wyvernCustom", proj);
@@ -102,11 +113,11 @@ namespace TiersPlus
             PlasmaLance.Register("PlasmaLance");
             PlasmaLance.OnAttack += PlasmaLance.ThrustLance;
             //plasmalance
-            PlasmaArmor = new ItemInfo(ItemType.ARMOR, "Plasmatic Armor", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaArmor"), Stats: new EquipStats(7, 5, 8, 5, 80, 5), BodyTex: GadgetCoreAPI.LoadTexture2D("Items/PlasmaArmorEquip"), ArmTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaHand"));
+            PlasmaArmor = new ItemInfo(ItemType.ARMOR, "Plasmatic Armor", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaArmor"), Stats: new EquipStats(7, 4, 8, 4, 8, 4), BodyTex: GadgetCoreAPI.LoadTexture2D("Items/PlasmaArmorEquip"), ArmTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaHand"));
             PlasmaArmor.Register("PlasmaArmor");
-            PlasmaHelmet = new ItemInfo(ItemType.HELMET, "Plasmatic Helmet", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaHelm"), Stats: new EquipStats(8, 5, 5, 8, 5, 8), HeadTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaHelmEquip"));
+            PlasmaHelmet = new ItemInfo(ItemType.HELMET, "Plasmatic Helmet", "", GadgetCoreAPI.LoadTexture2D("items/PlasmaHelm"), Stats: new EquipStats(8, 4, 4, 8, 4, 8), HeadTex: GadgetCoreAPI.LoadTexture2D("items/PlasmaHelmEquip"));
             PlasmaHelmet.Register("PlasmaHelmet");
-            ItemInfo NexusArmor = new ItemInfo(ItemType.ARMOR, "Nexus Armor", "", GadgetCoreAPI.LoadTexture2D("items/NexusArmor"), Stats: new EquipStats(6, 5, 5, 5, 7, 7), BodyTex: GadgetCoreAPI.LoadTexture2D("Items/NexusArmor"), ArmTex: GadgetCoreAPI.LoadTexture2D("items/NexusHand"));
+            ItemInfo NexusArmor = new ItemInfo(ItemType.ARMOR, "Nexus Armor", "", GadgetCoreAPI.LoadTexture2D("items/NexusArmor"), Stats: new EquipStats(6, 5, 5, 5, 8, 8), BodyTex: GadgetCoreAPI.LoadTexture2D("Items/NexusArmor"), ArmTex: GadgetCoreAPI.LoadTexture2D("items/NexusHand"));
             NexusArmor.Register("NexusArmor");
             ItemInfo NexusHelmet = new ItemInfo(ItemType.HELMET, "Nexus Helmet", "", GadgetCoreAPI.LoadTexture2D("items/NexusHelmItem"), Stats: new EquipStats(4, 4, 4, 4, 10, 10), HeadTex: GadgetCoreAPI.LoadTexture2D("items/NexusHelm"));
             NexusHelmet.Register("NexusHelmet");
@@ -158,28 +169,36 @@ namespace TiersPlus
             //loot pools
             //plasmathrower
             ItemInfo energiteItem = new ItemInfo(ItemType.LOOT | ItemType.ORE | ItemType.TIER7, "Energite", "LOOT - ORE\nTIER: 7",
-                GadgetCoreAPI.LoadTexture2D("Items/Energite")).Register(7);
+                GadgetCoreAPI.LoadTexture2D("Items/Energite")).Register("energyore");
             ItemInfo plasmaFernItem = new ItemInfo(ItemType.LOOT | ItemType.PLANT | ItemType.TIER7, "Plasma Fern", "LOOT - PLANT\nTIER: 7",
-                GadgetCoreAPI.LoadTexture2D("Items/PlasmaFern")).Register(17);
+                GadgetCoreAPI.LoadTexture2D("Items/PlasmaFern")).Register("fern");
             ItemInfo powerCrystalItem = new ItemInfo(ItemType.LOOT | ItemType.MONSTER | ItemType.TIER7, "Power Crystal", "LOOT - MONSTER PART\nTIER: 7",
-                GadgetCoreAPI.LoadTexture2D("Items/PowerCrystal")).Register(27);
+                GadgetCoreAPI.LoadTexture2D("Items/PowerCrystal")).Register("powercrystal");
             ItemInfo lightingBugItem = new ItemInfo(ItemType.LOOT | ItemType.BUG | ItemType.TIER7, "Lightning Bug", "LOOT - BUG\nTIER: 7",
-                GadgetCoreAPI.LoadTexture2D("Items/LightningBug")).Register(37);
+                GadgetCoreAPI.LoadTexture2D("Items/LightningBug")).Register("lightningbug");
 
             //Resin
             //Needle
             //Worm Tooth
             //Bookworm Larva
+            ItemInfo resinItem = new ItemInfo(ItemType.LOOT | ItemType.ORE | ItemType.TIER7, "Resin", "LOOT - ORE\nTIER: 8",
+                 GadgetCoreAPI.LoadTexture2D("Items/Energite")).Register("resin");
+            ItemInfo pineNeedleItem = new ItemInfo(ItemType.LOOT | ItemType.PLANT | ItemType.TIER7, "Pine Needle", "LOOT - PLANT\nTIER: 8",
+                GadgetCoreAPI.LoadTexture2D("Items/PlasmaFern")).Register("pineneedle");
+            ItemInfo WormToothItem = new ItemInfo(ItemType.LOOT | ItemType.MONSTER | ItemType.TIER7, "Worm Tooth", "LOOT - MONSTER PART\nTIER: 8",
+                GadgetCoreAPI.LoadTexture2D("Items/PowerCrystal")).Register("wormtooth");
+            ItemInfo bookwormLarvaItem = new ItemInfo(ItemType.LOOT | ItemType.BUG | ItemType.TIER7, "Bookworm Larva", "LOOT - BUG\nTIER: 8",
+                GadgetCoreAPI.LoadTexture2D("Items/LightningBug")).Register("bookwormlarva");
 
 
             ItemInfo energiteEmblemItem = new ItemInfo(ItemType.EMBLEM | ItemType.ORE | ItemType.TIER7, "Energite Emblem", "Tier 7.\nA shiny Token. Used\nto forge items.",
-                GadgetCoreAPI.LoadTexture2D("Items/EnergiteEmblem")).Register(107);
+                GadgetCoreAPI.LoadTexture2D("Items/EnergiteEmblem")).Register("energyemblem");
             ItemInfo fernEmblemItem = new ItemInfo(ItemType.EMBLEM | ItemType.PLANT | ItemType.TIER7, "Fern Emblem", "Tier 7.\nA shiny Token. Used\nto forge items.",
-                GadgetCoreAPI.LoadTexture2D("Items/FernEmblem")).Register(117);
+                GadgetCoreAPI.LoadTexture2D("Items/FernEmblem")).Register("fernemblem");
             ItemInfo powerEmblemItem = new ItemInfo(ItemType.EMBLEM | ItemType.MONSTER | ItemType.TIER7, "Power Emblem", "Tier 7.\nA shiny Token. Used\nto forge items.",
-                GadgetCoreAPI.LoadTexture2D("Items/PowerEmblem")).Register(127);
+                GadgetCoreAPI.LoadTexture2D("Items/PowerEmblem")).Register("poweremblem");
             ItemInfo lightingEmblemItem = new ItemInfo(ItemType.EMBLEM | ItemType.BUG | ItemType.TIER7, "Lightning Emblem", "Tier 7.\nA shiny Token. Used\nto forge items.",
-                GadgetCoreAPI.LoadTexture2D("Items/LightningEmblem")).Register(137);
+                GadgetCoreAPI.LoadTexture2D("Items/LightningEmblem")).Register("lightningemblem");
 
             ItemInfo plasmaTracerItem = new ItemInfo(ItemType.CONSUMABLE, "Plasma Tracer", "Grants 3 portal uses to\nThe Plasma Zone.",
                 GadgetCoreAPI.LoadTexture2D("Items/PlasmaTracer"), 32).Register();
@@ -225,7 +244,7 @@ namespace TiersPlus
             ));
             ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { fernEmblemItem.GetID(), powerEmblemItem.GetID(), energiteEmblemItem.GetID() }, new Item(PlasmaCannon.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
             ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { energiteEmblemItem.GetID(), fernEmblemItem.GetID(), lightingEmblemItem.GetID() }, new Item(PlasmaShield.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
-            ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { energiteEmblemItem.GetID(), powerEmblemItem.GetID(), fernEmblemItem.GetID() }, new Item(PlasmaLance.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
+            //((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { energiteEmblemItem.GetID(), powerEmblemItem.GetID(), fernEmblemItem.GetID() }, new Item(PlasmaLance.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
             ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { energiteEmblemItem.GetID(), lightingEmblemItem.GetID(), fernEmblemItem.GetID() }, new Item(PlasmaArmor.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
             ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { fernEmblemItem.GetID(), lightingEmblemItem.GetID(), energiteEmblemItem.GetID() }, new Item(PlasmaHelmet.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
             ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { powerEmblemItem.GetID(), lightingEmblemItem.GetID(), energiteEmblemItem.GetID() }, new Item(NebulaCannon.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
@@ -233,6 +252,7 @@ namespace TiersPlus
             ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { fernEmblemItem.GetID(), powerEmblemItem.GetID(), lightingEmblemItem.GetID() }, new Item(NexusHelmet.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
             ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { powerEmblemItem.GetID(), fernEmblemItem.GetID(), lightingEmblemItem.GetID() }, new Item(NexusArmor.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
             ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { lightingEmblemItem.GetID(), fernEmblemItem.GetID(), powerEmblemItem.GetID() }, new Item(NexusShield.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
+            ((CraftMenuInfo)MenuRegistry.Singleton["Gadget Core:Crafter Menu"]).AddCraftPerformer(CraftMenuInfo.CreateSimpleCraftPerformer(Tuple.Create(new int[] { powerEmblemItem.GetID(), energiteEmblemItem.GetID(), fernEmblemItem.GetID() }, new Item(plantain.GetID(), 1, 0, 3, 0, new int[3], new int[3]), 0)));
             GadgetCoreAPI.AddCreationMachineRecipe(powerEmblemItem.GetID(), new Item(1030, 1, 0, 0, 0, new int[3], new int[3]));
             GadgetCoreAPI.AddCreationMachineRecipe(energiteEmblemItem.GetID(), new Item(909, 1, 0, 0, 0, new int[3], new int[3]));
             GadgetCoreAPI.AddCreationMachineRecipe(fernEmblemItem.GetID(), new Item(908, 1, 0, 0, 0, new int[3], new int[3]));
@@ -275,17 +295,20 @@ namespace TiersPlus
 
             GameObject MykBug = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetEntityResource("spider"));
             MykBug.name = "Mykdunebug";
-            SpiderScript spiderScript = MykBug.GetComponent<SpiderScript>();
-            GameObject mykBugHead = spiderScript.head;
-            GameObject mykBugBody = spiderScript.body;
-            GameObject mykBugLeg = spiderScript.leg;
-            GameObject mykBugB = spiderScript.b;
-            UnityEngine.Object.Destroy(spiderScript);
-            MykBugScript mykBugScript = MykBug.AddComponent<MykBugScript>();
-            mykBugScript.head = mykBugHead;
-            mykBugScript.body = mykBugBody;
-            mykBugScript.leg = mykBugLeg;
-            mykBugScript.b = mykBugB;
+            MykBug.SetActive(false);
+            MykBug.ReplaceComponent<SpiderScript, MykBugScript>();
+            MykBug.GetComponent<Rigidbody>().useGravity = true;
+            //SpiderScript spiderScript = MykBug.GetComponent<SpiderScript>();
+            //GameObject mykBugHead = spiderScript.head;
+            //GameObject mykBugBody = spiderScript.body;
+            //GameObject mykBugLeg = spiderScript.leg;
+            //GameObject mykBugB = spiderScript.b;
+            //UnityEngine.Object.Destroy(spiderScript);
+            //MykBugScript mykBugScript = MykBug.AddComponent<MykBugScript>();
+            //mykBugScript.head = mykBugHead;
+            //mykBugScript.body = mykBugBody;
+            //mykBugScript.leg = mykBugLeg;
+            //mykBugScript.b = mykBugB;
             MykBug.transform.Find("e").Find("dunebug").Find("Plane").GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Transparent Cutout"))
             {
                 mainTexture = GadgetCoreAPI.LoadTexture2D("enemies/MykDunebug/Head"),
@@ -312,6 +335,12 @@ namespace TiersPlus
             };
             EntityInfo MykDunebug = new EntityInfo(EntityType.COMMON, MykBug).Register("Mykdunebug");
 
+            GameObject MykWasp = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetEntityResource("wasp"));
+            MykWasp.name = "MykWasp";
+            MykWasp.SetActive(false);
+            MykWasp.ReplaceComponent<WaspScript, MykWaspScript>();
+            EntityInfo mykWasp = new EntityInfo(EntityType.COMMON, MykWasp).Register("MykWasp");
+
             GameObject testProjEnemy = UnityEngine.Object.Instantiate(GadgetCoreAPI.GetEntityResource("sponge"));
             testProjEnemy.name = "testProjEnemy";
             testProjEnemy.SetActive(false);
@@ -324,14 +353,14 @@ namespace TiersPlus
             GameObject lavadragonPrefab = GadgetCoreAPI.GetEntityResource("lavadragon");
             lavadragonPrefab.SetActive(false);
             GameObject bigPlasmaDragon = UnityEngine.Object.Instantiate(lavadragonPrefab);
-            bigPlasmaDragon.name = "bigplasmadragon";
-            foreach (Millipede m in bigPlasmaDragon.GetComponentsInChildren<Millipede>())
-            {
+            //bigPlasmaDragon.name = "bigplasmadragon";
+            //foreach (Millipede m in bigPlasmaDragon.GetComponentsInChildren<Millipede>())
+            //{
             //Transform part = m.transform;
 
-            m.gameObject.ReplaceComponent<Millipede, PlasmaDragonScript>();
+            //m.gameObject.ReplaceComponent<Millipede, Millipede>();
             //part.gameObject.AddComponent<PlasmaDragonScript>().isMainHead = part.name == "0";
-            }
+            //}
             EntityInfo bigPlasmaDerg = new EntityInfo(EntityType.BOSS, bigPlasmaDragon).Register("bigplasmadragon");
 
 
@@ -350,9 +379,9 @@ namespace TiersPlus
             plasmaZonePlanet.AddWeightedWorldSpawn(LightningBugTree, 15);
             plasmaZonePlanet.AddWeightedWorldSpawn(PlasmaFern, 15);
             plasmaZonePlanet.AddWeightedWorldSpawn(TestProjEnemy, 15);
-            plasmaZonePlanet.AddWeightedWorldSpawn(bigPlasmaDerg, 10);
+            //plasmaZonePlanet.AddWeightedWorldSpawn(bigPlasmaDerg, 40);
             plasmaZonePlanet.AddWeightedWorldSpawn("obj/chest", 20);
-            plasmaZonePlanet.AddWeightedWorldSpawn("obj/chestGold", 5);
+            plasmaZonePlanet.AddWeightedWorldSpawn("obj/chestGold", 1);
             plasmaZonePlanet.AddWeightedTownSpawn("obj/chest", 25);
             plasmaZonePlanet.AddWeightedTownSpawn("obj/itemStand", 25);
             plasmaZonePlanet.AddWeightedTownSpawn("obj/chipStand", 25);
@@ -373,6 +402,9 @@ namespace TiersPlus
                 GadgetCoreAPI.LoadTexture2D("Planets/MykWorld/Planet"));
             MykPlanet.Register("Mykonogre Zone");
             MykPlanet.AddWeightedWorldSpawn(MykDunebug, 1);
+            MykPlanet.AddWeightedWorldSpawn(mykWasp, 1);
+            MykPlanet.OnGenerateWorld += (spawner, s) => spawner.StartCoroutine(SpawnMykonogre2());
+
 
             plasmaTracerItem.OnUse += (slot) =>
             {
@@ -459,6 +491,16 @@ namespace TiersPlus
             if (GameScript.MODS[16] == boostedMoveModCount) GameScript.MODS[16] -= power;
             if (GameScript.MODS[17] == boostedDashModCount) GameScript.MODS[17] -= power;
             if (GameScript.MODS[18] == boostedJumpModCount) GameScript.MODS[18] -= power;
+            yield break;
+        }
+        public IEnumerator SpawnMykonogre2()
+        {
+            yield return new WaitForSeconds(15f);
+            if (!GameScript.isTown && GameScript.inInstance && SpawnerScript.curBiome == 7)
+            {
+                Network.Instantiate(Resources.Load("e/mykonogre"), new Vector3(MenuScript.player.transform.position.x, MenuScript.player.transform.position.y + 75f, 0f), Quaternion.identity, 0);
+                InstanceTracker.PlayerScript.GetComponent<AudioSource>().PlayOneShot((AudioClip)Resources.Load("Au/plague"), Menuu.soundLevel / 10f);
+            }
             yield break;
         }
         IEnumerator TripleShot(PlayerScript script)
